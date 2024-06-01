@@ -35,17 +35,18 @@ const App = () => {
     fetch();
   };
 
+  const toggleIsDone = async (id, index) => {
+    const isDone = tasks[index].is_done;
+    await axios.put(`http://localhost:3010/tasks/${id}`, {
+      is_done: !isDone,
+    });
+    fetch();
+  };
+
   // 初回レンダリング時にfetch関数を実行
   useEffect(() => {
     fetch();
   }, []);
-
-  const toggleIsDone = (index) => {
-    const tasksCopy = [...tasks];
-    const isDone = tasksCopy[index].isDone;
-    tasksCopy[index].isDone = !isDone;
-    setTasks(tasksCopy);
-  };
 
   return (
     <Box mt="64px">

@@ -9,7 +9,7 @@ const Task = (props) => {
                 size="lg"
                 isChecked={props.isDone}
                 onChange={() => {
-                    props.toggleIsDone(props.index);
+                    props.toggleIsDone(props.id, props.index);
                 }}
             >
                 <Text>{props.name}</Text>
