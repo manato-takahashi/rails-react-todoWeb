@@ -1,15 +1,33 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
 import Task from './components/Task';
-import { Box, Center, Text, CheckboxGroup } from '@chakra-ui/react';
+import { 
+  Flex,
+  Box, 
+  Center, 
+  Text, 
+  CheckboxGroup,
+  Input,
+  Button,
+ } from '@chakra-ui/react';
 import axios from 'axios';
 
 const App = () => {
   const [tasks, setTasks] = useState([]);
+  const [name, setName] = useState("");
 
   const fetch = async () => {
     const res = await axios.get("http://localhost:3010/tasks");
     setTasks(res.data);
+  };
+
+  const createTask = async () => {
+    await axios.post("http://localhost:3010/tasks", {
+      name: name,
+      is_done: false,
+    });
+    setName("");
+    fetch();
   };
 
   // 初回レンダリング時にfetch関数を実行
@@ -33,6 +51,18 @@ const App = () => {
               タスク一覧
             </Text>
           </Box>
+          <Flex mb="24px">
+            <Input
+              placeholder="タスク名を入力"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+            <Box ml="16px">
+              <Button colorScheme="teal" onClick={createTask}>
+                タスクを作成
+              </Button>
+            </Box>
+          </Flex>
           <CheckboxGroup>
             {tasks.map((task, index) => {
               return (
