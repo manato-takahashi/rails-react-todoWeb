@@ -39,8 +39,9 @@ const App = () => {
     const isDone = tasks[index].is_done;
     await axios.put(`http://localhost:3010/tasks/${id}`, {
       is_done: !isDone,
+    }).then(() => {
+      fetch();
     });
-    fetch();
   };
 
   // 初回レンダリング時にfetch関数を実行
@@ -77,7 +78,7 @@ const App = () => {
                   key={index}
                   index={index}
                   name={task.name}
-                  isDone={task.isDone}
+                  isDone={task.is_done}
                   toggleIsDone={toggleIsDone}
                   destroyTask={destroyTask}
                 />
